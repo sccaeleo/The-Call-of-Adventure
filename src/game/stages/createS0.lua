@@ -4,7 +4,7 @@ local Background = require "src.game.tiling.Background"
 --local Skeleton = require "src.game.enemy.Skeleton"
 local Sounds = require "src.game.Sounds"
 
-local function createS2()
+local function createS0()
     local stage = Stage(20,50,Tileset)
     local mapdata = require "src.game.maps.Map1"
     stage:readMapData(mapdata)
@@ -28,9 +28,9 @@ local function createS2()
 
 
     -- music
-    stage:setMusic(Sounds["music_dungeon_passive"])
+    --stage:setMusic(Sounds["music_dungeon_passive"])
 
     return stage
 end
 
-return createS2
+return createS0
