@@ -10,7 +10,9 @@ local Ranger = "graphics/characters/ranger-Sheet.png"
 local Paladin = "graphics/characters/paladin-Sheet.png"
 
 
+-- Animation
 local animation = love.graphics.newImage(Wizard)
+
 
 
 local Player = Class{}
@@ -25,3 +27,21 @@ function Player:init(x, y, class)
     self.animations = {}
     self.sprites = {}
     self:createAnimations()
+
+    if self.class == "Wizard" then
+        self.sprite = self.animations["idle"]
+        self.sprite:gotoFrame(1)
+    end
+    if self.class == "Ranger" then    
+        self.sprite = self.animations["idle"]
+        self.sprite:gotoFrame(1)
+    end
+    if self.class == "Paladin" then
+        self.sprite = self.animations["idle"]
+        self.sprite:gotoFrame(1)
+    end
+end
+
+function Player:update()
+    
+end

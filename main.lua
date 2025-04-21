@@ -7,17 +7,15 @@ local Player = require "src.game.Player"
 local Camera = require "libs.sxcamera"
 --local HUD = require "src.game.HUDimproved"
 
--- Sprites
-local Wizard = "graphics/characters/wizard-Sheet.png"
-local Ranger = "graphics/characters/ranger-Sheet.png"
-local Paladin = "graphics/characters/paladin-Sheet.png"
 
 function love.load()
     love.window.setTitle("The Call of Adventure")
     Push:setupScreen(gameWidth, gameHeight, windowWidth, windowHeight, {fullscreen = false, resizable = true})
     math.randomseed(os.time()) -- RNG setup for later
+    
+    Class = "Wizard"
 
-    player = Player(0,0, Wizard)
+    player = Player(0,0, Class)
     hud = HUD(player)
 
     camera = Camera(gameWidth/2,gameHeight/2,
@@ -42,6 +40,23 @@ function love.keypressed(key)
         love.event.quit()
     elseif key == "F2" or key == "tab" then
         debugFlag = not debugFlag
+    
+    elseif gameState=="title" and key == "return" then
+        gameState = "roam"
+        stagemanager:setStage(0)
+
+    elseif gameState == "complete" and key == "return" then
+        gameState = "title"
+
+    elseif gameState == "end" and key == "return" then
+        gameState = "title"
+        player:reset()
+        stagemanager:setStage(0)
+    
+    
+
+    else
+        player:keypressed(key)
     end
 end
 
@@ -51,11 +66,36 @@ end
 function love.draw()
     Push:start()
 
+    -- Title Screen
+    if gameState == "title" then
+        drawTitleState()
+    -- When player is moving around in dungeon
+    elseif gameState == "roam" then
+        drawRoamState()
+    
+    -- When player battles
+    elseif gameState == "battle" then
+        drawBattleState()
+
+    -- When player dies/loses
+    elseif gameState == "end" then
+        drawEndState()
+
+    -- When game is won
+    elseif gameState == "complete" then
+        drawStageCompleteState()
+
+    -- Error
+    else
+        love.graphics.setColor(1,1,0)
+        love.graphics.printf("Error", 0,20,gameWidth,"center")
+    end
+
     Push:finish()
 end
 
 -- Title Screen
-function drawTitle()
+function drawTitleState()
     love.graphics.setColor(0.3,0.3,0.3)
     stagemanager:currentStage():drawBg()
     camera:attach()
@@ -67,8 +107,29 @@ function drawTitle()
     love.graphics.printf("Press enter to start!", 0,150,gameWidth,"center")
 end
 
+function drawRoamState()
+
+    stagemanager:currentStage():drawBg()
+
+    camera:attach()
+
+    stagemanager:currentStage():draw()
+    player:draw()
+    
+    camera:detach()
+end
+
+function drawBattleState()
+    stagemanager:currentStage():drawBg()
+    camera:attach()
+    stagemanager:currentStage():draw()
+    player:draw()
+    camera:detach()
+    --hud:draw()
+end
+
 -- Game Over Screen
-function drawEnd()
+function drawEndState()
     love.graphics.setColor(0.3,0.3,0.3)
     stagemanager:currentStage():drawBg()
     camera:attach()
@@ -78,4 +139,18 @@ function drawEnd()
     love.graphics.setColor(1,0,0,1)
     love.graphics.printf("Game Over", titleFont,0,80,gameWidth,"center")
     love.graphics.printf("Press any key to restart", 0,150,gameWidth,"center")
+end
+
+function drawStageCompleteState()
+    love.graphics.setColor(0.3,0.3,0.3)
+    stagemanager:currentStage():drawBg()
+    camera:attach()
+    stagemanager:currentStage():draw()
+    camera:detach()
+
+    -- Set to green
+    love.graphics.setColor(0,1,0)
+    love.graphics.printf("You Win!", titleFont,0,80,gameWidth,"center")
+    love.graphics.printf("Press any key to restart", 0,150,gameWidth,"center")
+
 end
