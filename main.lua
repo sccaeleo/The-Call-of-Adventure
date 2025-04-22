@@ -12,7 +12,8 @@ function love.load()
     love.window.setTitle("The Call of Adventure")
     Push:setupScreen(gameWidth, gameHeight, windowWidth, windowHeight, {fullscreen = false, resizable = true})
     math.randomseed(os.time()) -- RNG setup for later
-    
+    titleFont = love.graphics.newFont("fonts/Kaph-Regular.ttf",26)
+
     Class = "Wizard"
 
     player = Player(0,0, Class)
@@ -25,9 +26,9 @@ function love.load()
     stagemanager:setPlayer(player)
     stagemanager:setCamera(camera)
     --stagemanager:setStage(1)
-
-    titleFont = love.graphics.newFont("fonts/Kaph-Regular.ttf",26)
+    
     stagemanager:setStage(0)
+    gameState = "title"
 
 end
 

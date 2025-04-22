@@ -5,7 +5,7 @@ local Background = require "src.game.tiling.Background"
 local Sounds = require "src.game.Sounds"
 
 local function createS1()
-    local stage = Stage(20,50,Tileset)
+    local stage = Stage(20,30,Tileset)
     local mapdata = require "src.game.maps.Map1"
     stage:readMapData(mapdata)
 

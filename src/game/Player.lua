@@ -6,15 +6,15 @@ local Sounds = require "src.game.Sounds"
 
 -- Sprites
 local WizardSprite = love.graphics.newImage("graphics/characters/wizard-Sheet.png")
-local WizardGrid = Anim8.newGrid(16,16,WizardSprite:getWidth(),WizardSprite:getHeight())
+local WizardGrid = Anim8.newGrid(32,32,WizardSprite:getWidth(),WizardSprite:getHeight())
 local WizardAnim = Anim8.newAnimation(WizardGrid('1-4',1), 0.3)
 
 local RangerSprite = love.graphics.newImage("graphics/characters/ranger-Sheet.png")
-local RangerGrid = Anim8.newGrid(16,16,RangerSprite:getWidth(),RangerSprite:getHeight())
+local RangerGrid = Anim8.newGrid(32,32,RangerSprite:getWidth(),RangerSprite:getHeight())
 local RangerAnim = Anim8.newAnimation(RangerGrid('1-4',1), 0.3)
 
 local PaladinSprite = love.graphics.newImage("graphics/characters/paladin-Sheet.png")
-local PaladinGrid = Anim8.newGrid(16,16,PaladinSprite:getWidth(),PaladinSprite:getHeight())
+local PaladinGrid = Anim8.newGrid(32,32,PaladinSprite:getWidth(),PaladinSprite:getHeight())
 local PaladinAnim = Anim8.newAnimation(PaladinGrid('1-4',1), 0.3)
 
 
@@ -43,15 +43,15 @@ function Player:init(x, y, class)
     -- I didn't add that many flavors of animations because drawing sprite animations is incredibly time-consuming
     -- ...and I am bad at it
     if self.class == "Wizard" then
-        self.animations["WizardIdle"] = WizardAnim
+        self.animations["Wizard"] = WizardAnim
         self.sprites["Wizard"] = WizardSprite
 
     elseif self.class == "Ranger" then
-        self.animations["RangerIdle"] = RangerAnim
+        self.animations["Ranger"] = RangerAnim
         self.sprites["Ranger"] = RangerSprite
 
     elseif self.class == "Paladin" then
-        self.animations["PaladinIdle"] = PaladinAnim
+        self.animations["Paladin"] = PaladinAnim
         self.sprites["Paladin"] = PaladinSprite
 
     end
@@ -75,8 +75,7 @@ function Player:handleObjectCollision(obj)
 end
 
 function Player:draw()
-    self.animations[self.state]:draw(self.sprites[self.state],
-        math.floor(self.x), math.floor(self.y) )
+    self.animations[self.class]:draw(self.sprites[self.class], math.floor(self.x), math.floor(self.y) )
 
     if debugFlag then
         local w,h = self:getDimensions()
