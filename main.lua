@@ -14,14 +14,14 @@ function love.load()
     math.randomseed(os.time()) -- RNG setup for later
     titleFont = love.graphics.newFont("fonts/Kaph-Regular.ttf",26)
 
-    Class = "Wizard"
+    Class = "Paladin"
 
     player = Player(0,0, Class)
     --hud = HUD(player)
 
     camera = Camera(gameWidth/2,gameHeight/2,
         gameWidth,gameHeight)
-    camera:setFollowStyle('TOPDOWN_TIGHT')
+    camera:setFollowStyle('TOPDOWN')
 
     stagemanager:setPlayer(player)
     stagemanager:setCamera(camera)
@@ -62,6 +62,15 @@ function love.keypressed(key)
 end
 
 function love.update(dt)
+    if gameState == "roam" then
+        stagemanager:currentStage():update(dt)
+        player:update(dt, stagemanager:currentStage())
+        --hud:update(dt)
+
+        camera:update(dt)
+        camera:follow(
+            math.floor(player.x+48), math.floor(player.y))
+    end
 end
 
 function love.draw()

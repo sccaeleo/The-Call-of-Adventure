@@ -19,7 +19,7 @@ local function createS1()
 
     -- Initial Player Pos
     stage.initialPlayerX = 1*16
-    stage.initialPlayerY = 13*16 
+    stage.initialPlayerY = 13*16
 
     -- Enemies
     --local mob1 = Skeleton()

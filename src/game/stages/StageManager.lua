@@ -42,7 +42,7 @@ function StageManager:setStage(index)
 
     self.player.x = self.current.initialPlayerX
     self.player.y = self.current.initialPlayerY
-     
+
     self.camera:setBounds(0, 0, self:currentStage():getWidth(), self:currentStage():getHeight())
     self:currentStage():playMusic()
     return self:currentStage()

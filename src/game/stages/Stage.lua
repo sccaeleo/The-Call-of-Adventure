@@ -145,18 +145,31 @@ function Stage:leftCollision(entity, offset)
     return false
 end
 
-function Stage:bottomCollision(entity, ofsRow, ofsCol)
+function Stage:topCollision(entity, offset)
     local row1,col1,row2,col2 = self:toMapCoords(entity)
-
-    if row2+ofsRow < self.rowCount then -- not falling below screen
-        for j = math.max(1, col1+ofsCol),
-                math.min(col2-ofsCol, self.colCount) do
-            if self.map[row2+ofsRow][j] ~= nil 
-                    and self.map[row2+ofsRow][j].solid then
+    if row1 >= 1 then
+        for i = math.max(1, col1+offset), 
+                math.min(col2-offset,self.colCount) do
+            if self.map[row1][i] ~= nil 
+                    and self.map[row1][i].solid then
                 return true
-            end -- end if solid tile
-        end -- end for j
-    end -- end if row2 < rowCount
+            end -- end if 
+        end -- end for
+    end -- end if    
+    return false
+end
+
+function Stage:bottomCollision(entity, offset)
+    local row1,col1,row2,col2 = self:toMapCoords(entity)
+    if row2 < self.rowCount then
+        for i = math.max(1, col1+offset), 
+                math.min(col2-offset,self.colCount) do
+            if self.map[row2][i] ~= nil 
+                    and self.map[row2][i].solid then
+                return true
+            end -- end if 
+        end -- end for
+    end -- end if    
     return false
 end
 

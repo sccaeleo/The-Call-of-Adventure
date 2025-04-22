@@ -26,6 +26,8 @@ function Player:init(x, y, class)
     self.y = y
     self.name = "char"
     self.class = class
+    self.dir = "r"
+    self.speed = 96
 
     -- Player stats & inventory
     self.health = 100
@@ -57,11 +59,47 @@ function Player:init(x, y, class)
     end
 
     -- Hitbox for wall collisions
-    self.hitbox = Hbox(self, 0, 0, 16, 16)
+    self.hitbox = Hbox(self, 8, 8, 16, 16)
 end
 
 function Player:update(dt,stage)
-    
+
+    -- Player movement
+    if love.keyboard.isDown("d","right") then
+        self:setDirection("r")
+        if not stage:rightCollision(self, 1) then
+            self.x = self.x + self.speed*dt
+        end
+    elseif love.keyboard.isDown("a","left") then
+        self:setDirection("l")
+        if not stage:leftCollision(self,1) then
+            self.x = self.x - self.speed*dt
+        end
+    elseif love.keyboard.isDown("s","down") then
+        if not stage:bottomCollision(self,1) then
+            self.y = self.y + self.speed*dt
+        end
+    elseif love.keyboard.isDown("w","up") then
+        if not stage:topCollision(self,1) then
+            self.y = self.y - self.speed*dt
+        end
+    end
+
+    -- changing states logic
+    if self.state == "idle" or self.state == "walk" then
+        if love.keyboard.isDown("w","a","s","d","up","down","right","left") then
+            self.state = "walk"
+        else
+            self.state = "idle"
+        end
+    end
+
+    -- Collisions
+    local obj = stage:checkObjectsCollision(self)
+    if obj then
+        -- Player colided with obj
+        self:handleObjectCollision(obj)
+    end
 end
 
 function Player:handleObjectCollision(obj)
@@ -90,26 +128,19 @@ function Player:draw()
 end
 
 function Player:keypressed(key)
-    if key == "space" and self.state ~= "jump" then
-        self.state = "jump"
-        self.speedY = -64 -- jumping speed
-        self.y = self.y -1
-        self.animations["jump"]:gotoFrame(1)
-        Sounds["jump"]:play()
-    elseif key=="f" and self.state ~="jump" 
-            and self.state~="attack1" and self.state~="attack2" then
-        self.state = "attack1"
-        self.animations["attack1"]:gotoFrame(1)
-        Sounds["attack1"]:play()
-    elseif key=="f" and self.state == "attack1" then
-        self.state = "attack2"
-        self.animations["attack2"]:gotoFrame(1)
-        Sounds["attack2"]:play()
-    end
 end
 
 function Player:keyreleased(key)
     
+end
+
+function Player:setDirection(newdir)
+    if self.dir ~= newdir then
+        self.dir = newdir
+        for states,anim in pairs(self.animations) do
+            anim:flipH()
+        end
+    end
 end
 
 function Player:setCoords(x,y)
@@ -118,11 +149,26 @@ function Player:setCoords(x,y)
 end
 
 function Player:getDimensions()
-    return self.animations[self.state]:getDimensions()
+    return self.animations[self.class]:getDimensions()
+end
+function Player:getHbox()
+    return self.hitbox
 end
 
 function Player:getHitbox()
-    return self:getHbox("hit")
+    return self:getHbox()
+end
+
+function Player:nextStage(stage)
+    self.x = stage.initialPlayerX
+    self.y = stage.initialPlayerY
+end
+
+function Player:reset()
+    self.state = "idle"
+    self:setDirection("r")
+    self.hp = 100
+    self.mana = 100
 end
 
 return Player
