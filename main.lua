@@ -16,7 +16,7 @@ function love.load()
     Class = "Wizard"
 
     player = Player(0,0, Class)
-    hud = HUD(player)
+    --hud = HUD(player)
 
     camera = Camera(gameWidth/2,gameHeight/2,
         gameWidth,gameHeight)
