@@ -5,7 +5,7 @@ local Push = require "libs.push"
 local Sounds = require "src.game.Sounds"
 local Player = require "src.game.Player"
 local Camera = require "libs.sxcamera"
---local HUD = require "src.game.HUDimproved"
+local HUD = require "src.game.HUD"
 
 
 function love.load()
@@ -17,7 +17,7 @@ function love.load()
     Class = "Paladin"
 
     player = Player(0,0, Class)
-    --hud = HUD(player)
+    hud = HUD(player)
 
     camera = Camera(gameWidth/2,gameHeight/2,
         gameWidth,gameHeight)
@@ -48,6 +48,8 @@ function love.keypressed(key)
 
     elseif gameState == "complete" and key == "return" then
         gameState = "title"
+    elseif gameState == "roam" and key == "i" then
+        gameState = "battle"
 
     elseif gameState == "end" and key == "return" then
         gameState = "title"
@@ -132,10 +134,9 @@ end
 function drawBattleState()
     stagemanager:currentStage():drawBg()
     camera:attach()
-    stagemanager:currentStage():draw()
-    player:draw()
+    player:drawBattleState()
     camera:detach()
-    --hud:draw()
+    hud:draw()
 end
 
 -- Game Over Screen

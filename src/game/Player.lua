@@ -31,7 +31,11 @@ function Player:init(x, y, class)
 
     -- Player stats & inventory
     self.health = 100
+    self.CurrentHp = 100
+
     self.mana = 100
+    self.CurrentMp = 100
+    
     self.consumables = {}
 
     -- States = idle, walk, battle, attack, hurt
@@ -118,6 +122,21 @@ function Player:draw()
     if debugFlag then
         local w,h = self:getDimensions()
         love.graphics.rectangle("line",self.x,self.y,w,h) -- sprite
+
+        if self:getHitbox() then
+            love.graphics.setColor(1,0,0) -- red
+            self:getHitbox():draw()
+        end
+        love.graphics.setColor(1,1,1) 
+    end
+end
+
+function Player:drawBattleState()
+    self.animations[self.class]:draw(self.sprites[self.class], math.floor(gameWidth/4), math.floor(gameHeight/2) )
+
+    if debugFlag then
+        local w,h = self:getDimensions()
+        love.graphics.rectangle("line",gameWidth/4,gameHeight/2,w,h) -- sprite
 
         if self:getHitbox() then
             love.graphics.setColor(1,0,0) -- red
