@@ -6,7 +6,7 @@ local Sounds = require "src.game.Sounds"
 local Player = require "src.game.Player"
 local Camera = require "libs.sxcamera"
 local HUD = require "src.game.HUD"
-
+local Skeleton = require "src.game.enemy.Skeleton"
 
 function love.load()
     love.window.setTitle("The Call of Adventure")
@@ -16,8 +16,9 @@ function love.load()
 
     Class = "Paladin"
 
+    skeleton = Skeleton(0,0, "Skeleton")
     player = Player(0,0, Class)
-    hud = HUD(player)
+    hud = HUD(player,skeleton)
 
     camera = Camera(gameWidth/2,gameHeight/2,
         gameWidth,gameHeight)
@@ -135,6 +136,7 @@ function drawBattleState()
     stagemanager:currentStage():drawBg()
     camera:attach()
     player:drawBattleState()
+    skeleton:drawBattleState()
     camera:detach()
     hud:draw()
 end
