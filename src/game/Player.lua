@@ -42,32 +42,35 @@ function Player:init(x, y, class)
     -- States = idle, walk, battle, attack, hurt
     self.state = "idle"
 
-    -- Animations
-    self.animations = {}
-    self.sprites = {}
-
     -- Class animation handler 
     -- I didn't add that many flavors of animations because drawing sprite animations is incredibly time-consuming
     -- ...and I am bad at it
+    self.animations = {}
+    self.sprites = {}
+
+    self.animations["Wizard"] = WizardAnim
+    self.sprites["Wizard"] = WizardSprite
+    self.animations["Ranger"] = RangerAnim
+    self.sprites["Ranger"] = RangerSprite
+    self.animations["Paladin"] = PaladinAnim
+    self.sprites["Paladin"] = PaladinSprite
+    
     if self.class == "Wizard" then
-        self.animations["Wizard"] = WizardAnim
-        self.sprites["Wizard"] = WizardSprite
+        
         self.armorClass = 12
         self.attackBonus = 8
         self.damageBonus = 8
         self.damageRoll = 12
 
     elseif self.class == "Ranger" then
-        self.animations["Ranger"] = RangerAnim
-        self.sprites["Ranger"] = RangerSprite
+        
         self.armorClass = 14
         self.attackBonus = 6
         self.damageBonus = 6
         self.damageRoll = 10
 
     elseif self.class == "Paladin" then
-        self.animations["Paladin"] = PaladinAnim
-        self.sprites["Paladin"] = PaladinSprite
+        
         self.armorClass = 16
         self.attackBonus = 4
         self.damageBonus = 5

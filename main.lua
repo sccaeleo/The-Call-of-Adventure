@@ -8,13 +8,15 @@ local HUD = require "src.game.HUD"
 local Skeleton = require "src.game.enemy.Skeleton"
 local Sounds = require "src.game.Sounds"
 
+
+
 function love.load()
     love.window.setTitle("The Call of Adventure")
     Push:setupScreen(gameWidth, gameHeight, windowWidth, windowHeight, {fullscreen = false, resizable = true})
     math.randomseed(os.time()) -- RNG setup for later
     titleFont = love.graphics.newFont("fonts/Kaph-Regular.ttf",26)
-    Class = "Wizard"
 
+    Class = "Wizard"
     Sounds["music_dungeon_passive"]:setLooping(true)    
     Sounds["music_dungeon_passive"]:play()
 
@@ -45,7 +47,16 @@ function love.keypressed(key)
     elseif key == "F2" or key == "tab" then
         debugFlag = not debugFlag
     
-    elseif gameState=="title" and key == "return" then
+    elseif gameState=="title" and key == "1" then
+        player.class = "Wizard"
+        gameState = "roam"
+        stagemanager:setStage(0)
+    elseif gameState=="title" and key == "2" then
+        player.class = "Ranger"
+        gameState = "roam"
+        stagemanager:setStage(0)
+    elseif gameState=="title" and key == "3" then
+        player.class = "Paladin"
         gameState = "roam"
         stagemanager:setStage(0)
 
@@ -128,7 +139,16 @@ function drawTitleState()
 
     love.graphics.setColor(1,1,1)
     love.graphics.printf("The Call of Adventure", titleFont,0,80,gameWidth,"center")
-    love.graphics.printf("Press enter to start!", 0,150,gameWidth,"center")
+    love.graphics.printf("Choose your character!", 0,150,gameWidth,"center")
+
+    -- Show characters for char select
+    player.animations["Wizard"]:draw(player.sprites["Wizard"], math.floor(gameWidth/2) - 50, math.floor(gameHeight/2) + 50 )
+    love.graphics.printf("1", math.floor(gameWidth/2) - 40, math.floor(gameHeight/2) + 80, gameWidth)
+    player.animations["Ranger"]:draw(player.sprites["Ranger"], math.floor(gameWidth/2) - 20, math.floor(gameHeight/2) + 50 )
+    love.graphics.printf("2", math.floor(gameWidth/2) - 10, math.floor(gameHeight/2) + 80, gameWidth)
+    player.animations["Paladin"]:draw(player.sprites["Paladin"], math.floor(gameWidth/2) + 10, math.floor(gameHeight/2) + 50 )
+    love.graphics.printf("3", math.floor(gameWidth/2) + 20, math.floor(gameHeight/2) + 80, gameWidth)
+    
 end
 
 function drawRoamState()
