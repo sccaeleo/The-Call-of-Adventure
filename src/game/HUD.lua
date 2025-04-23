@@ -1,5 +1,6 @@
 local Class = require "libs.hump.class"
 local Tweens = require "libs.tween"
+local Explosion = require "src.game.Explosion"
 
 -- Here we create a specific font in our HUD
 local hudFont = love.graphics.newFont("fonts/Abaddon Bold.ttf",16)
@@ -8,6 +9,9 @@ local damageTextEnemy = ""
 local damageTextTimer = 0
 local tween = Tweens
 local playerBlockDuration = 0
+local exp = Explosion()
+exp:init()
+exp:setColor(255,0,0)
 
 local HUD = Class{}
 function HUD:init(player, skeleton)
@@ -15,8 +19,13 @@ function HUD:init(player, skeleton)
     self.skeleton = skeleton
 end
 
+function love.load()
+    exp = Explosion()
+end
+
 function HUD:update(dt)
     math.randomseed(os.time())
+    exp:update(dt)
     if damageTextTimer > 0 then
         damageTextTimer = damageTextTimer - dt
     else
@@ -37,6 +46,7 @@ function HUD:keypressed(key)
     if key == "a" then 
         if (math.random(1,20) + self.skeleton.attackBonus) >= self.player.armorClass then
             self.player.CurrentHp = self.player.CurrentHp - (math.random(1,self.skeleton.damageRoll) + self.skeleton.damageBonus)
+            exp:trigger(math.floor(gameWidth/4),math.floor(gameHeight/2))
             damageTextChar = "Hit"
             damageTextTimer = 1
         else
@@ -44,6 +54,7 @@ function HUD:keypressed(key)
         end
         if (math.random(1,20) + self.player.attackBonus) >= self.skeleton.armorClass then
             self.skeleton.CurrentHp = self.skeleton.CurrentHp - (math.random(1,self.player.damageRoll) + self.player.damageBonus)
+            exp:trigger(math.floor(gameWidth - gameWidth/4),math.floor(gameHeight/2))
             damageTextEnemy = "Hit"
             damageTextTimer = 1
         else
@@ -57,6 +68,7 @@ function HUD:keypressed(key)
 
         if (math.random(1,20) + self.skeleton.attackBonus) >= self.player.armorClass then
             self.player.CurrentHp = self.player.CurrentHp - math.floor((math.random(1,self.skeleton.damageRoll) + self.skeleton.damageBonus)/2)
+            exp:trigger(math.floor(gameWidth/4),math.floor(gameHeight/2))
             damageTextChar = "Hit"
             damageTextEnemy = "Block"
             damageTextTimer = 1
@@ -72,6 +84,7 @@ function HUD:draw()
     if damageText ~= "" then
         love.graphics.print(damageTextChar,hudFont,math.floor(gameWidth/4),math.floor(gameHeight/2 - 32))
         love.graphics.print(damageTextEnemy,hudFont,math.floor(gameWidth -gameWidth/4),math.floor(gameHeight/2 - 32))
+        exp:draw(10,10)
     end
     --love.graphics.print( text, font, x, y,
     love.graphics.print("HP:"..self.player.CurrentHp.."/"..self.player.health,hudFont,math.floor(gameWidth/4 - 16),math.floor(gameHeight/2 + 32))
