@@ -1,10 +1,13 @@
 local Class = require "libs.hump.class"
+local Tweens = require "libs.tween"
 
 -- Here we create a specific font in our HUD
 local hudFont = love.graphics.newFont("fonts/Abaddon Bold.ttf",16)
 local damageTextChar = ""
 local damageTextEnemy = ""
 local damageTextTimer = 0
+local tween = Tweens
+local playerBlockDuration = 0
 
 local HUD = Class{}
 function HUD:init(player, skeleton)
@@ -46,6 +49,22 @@ function HUD:keypressed(key)
         else
             damageTextEnemy = "Miss"
         end
+        if playerBlockDuration > 0 then
+            playerBlockDuration = playerBlockDuration - 1
+        end
+    elseif key == "b" then
+        playerBlockDuration = 3
+
+        if (math.random(1,20) + self.skeleton.attackBonus) >= self.player.armorClass then
+            self.player.CurrentHp = self.player.CurrentHp - math.floor((math.random(1,self.skeleton.damageRoll) + self.skeleton.damageBonus)/2)
+            damageTextChar = "Hit"
+            damageTextEnemy = "Block"
+            damageTextTimer = 1
+        else
+            damageTextTimer = 1
+            damageTextEnemy = "Block"
+            damageTextChar = "Miss"
+        end
     end
 end
 
@@ -61,6 +80,8 @@ function HUD:draw()
     love.graphics.print("HP:"..self.skeleton.CurrentHp.."/"..self.skeleton.health,hudFont,math.floor(gameWidth - (gameWidth/4) - 16),math.floor(gameHeight/2 + 32))
     love.graphics.print("MP:"..self.skeleton.CurrentMp.."/"..self.skeleton.mana,hudFont,math.floor(gameWidth - (gameWidth/4) - 16),math.floor(gameHeight/2 +48))
     love.graphics.print("Press 'a' to attack",hudFont,math.floor(gameWidth/2 - 64),math.floor(gameHeight/2 + 80))
+    love.graphics.print("Press 'b' to block",hudFont,math.floor(gameWidth/2 - 64),math.floor(gameHeight/2 + 96))
+    
     -- Time is usually Stage specific for Platformers
     --love.graphics.print("Score:"..self.player.score,hudFont,250,1)
 
