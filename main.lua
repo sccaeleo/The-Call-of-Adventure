@@ -24,8 +24,7 @@ function love.load()
     player = Player(0,0, Class)
     hud = HUD(player,skeleton)
 
-    camera = Camera(gameWidth/2,gameHeight/2,
-        gameWidth,gameHeight)
+    camera = Camera.new(gameWidth/2,gameHeight/2,gameWidth,gameHeight)
     camera:setFollowStyle('TOPDOWN')
 
     stagemanager:setPlayer(player)
