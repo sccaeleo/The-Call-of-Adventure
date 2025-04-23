@@ -1,7 +1,7 @@
 local Stage = require "src.game.stages.Stage"
 local Tileset = require "src.game.tiling.DungeonTileset"
 local Background = require "src.game.tiling.Background"
---local Skeleton = require "src.game.enemy.Skeleton"
+local Skeleton = require "src.game.enemy.Skeleton"
 local Sounds = require "src.game.Sounds"
 
 local function createS0()
@@ -20,11 +20,6 @@ local function createS0()
     -- Initial Player Pos
     stage.initialPlayerX = 2*16
     stage.initialPlayerY = 2*16
-
-    -- Enemies
-    --local mob1 = Skeleton()
-    --mob1:setCoord(22*16, 12*16)
-    --stage:addMob(mob1)
 
 
     -- music

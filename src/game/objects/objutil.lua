@@ -3,6 +3,7 @@ local Bone = require "src.game.objects.Bone"
 local Skull = require "src.game.objects.Skull"
 local Chest = require "src.game.objects.Chest"
 local Torch = require "src.game.objects.Torch"
+local Skeleton = require "src.game.objects.SkeletonEnemy"
 
 local objutil = {}
 function objutil.convertObjectData(objdata, tilesize)
@@ -16,7 +17,11 @@ function objutil.convertObjectData(objdata, tilesize)
         obj = Chest("chest")
     elseif objdata.name == "Torch" then
         obj = Torch("torch")
+
+    elseif objdata.name == "Skeleton" then
+        obj = Skeleton("skeleton")
     end
+
 
     if obj then
         obj:setCoords(objdata.x, objdata.y-tilesize, tilesize)

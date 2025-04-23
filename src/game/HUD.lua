@@ -113,6 +113,10 @@ end
 
 function HUD:draw()
 
+    -- Draw Char and Enemy
+    self.player.animations[self.player.class]:draw(self.player.sprites[self.player.class], math.floor(gameWidth/4), math.floor(gameHeight/2) )
+    self.skeleton.animations[self.skeleton.class]:draw(self.skeleton.sprites[self.skeleton.class], math.floor(gameWidth - gameWidth/4), math.floor(gameHeight/2) )
+    
     -- Display hit/miss
     if damageTextChar ~= "" then
         tweenCharTextPos = Tween.new(1,charTextPos,{y = initialCharTextPos.y - 10})

@@ -11,6 +11,7 @@ function Skull:init(type) GameObject:init()
     self.type = type 
     self.sprite = spriteSkull
     self.collectible = false
+    self.enemy = false
 
     self:setType(type)
 end

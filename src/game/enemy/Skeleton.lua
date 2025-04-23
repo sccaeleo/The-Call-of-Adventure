@@ -96,12 +96,6 @@ end
 
 function Skeleton:handleObjectCollision(obj)
 
-    -- Todo, adapt for opening chest if time allows
-    --if obj.name == "coin" then
-    --    self.coins = self.coins +1
-    --    self.score = self.score +10
-    --    Sounds["coin"]:play()
-    --end
 end
 
 function Skeleton:draw()

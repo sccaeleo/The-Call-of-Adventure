@@ -11,6 +11,7 @@ function Chest:init(type) GameObject:init()
     self.type = type 
     self.sprite = spriteChest
     self.collectible = true
+    self.enemy = false
 
     self:setType(type)
 end

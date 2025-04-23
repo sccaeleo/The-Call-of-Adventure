@@ -146,8 +146,8 @@ end
 function drawBattleState()
     stagemanager:currentStage():drawBg()
     camera:attach()
-    player:drawBattleState()
-    skeleton:drawBattleState()
+    --player:drawBattleState()
+    --skeleton:drawBattleState()
     camera:detach()
     hud:draw()
 end

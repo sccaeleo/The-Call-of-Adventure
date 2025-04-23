@@ -14,6 +14,7 @@ function Torch:init(type) GameObject:init()
     self.sprite = spriteTorch
     self.animation = animTorch:clone()
     self.collectible = false
+    self.enemy = false
 
     self:setType(type)
 end

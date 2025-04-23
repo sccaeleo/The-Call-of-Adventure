@@ -189,11 +189,17 @@ function Stage:checkObjectsCollision(entity)
                 and col2 >= self.objects[k].col then
             
             local collidedObj = self.objects[k]
+
+            -- Special object scenarios
+            if collidedObj.enemy then
+                gameState = "battle"
+            end
+
             if collidedObj.collectible then
-                love.graphics.print(collidedObj.name.." collected!",font,collidedObj.x,collidedObj.y)
                 table.remove(self.objects, k)
                 
             end
+
             return collidedObj
         end
     end
