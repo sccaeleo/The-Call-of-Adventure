@@ -124,7 +124,7 @@ function drawTitleState()
     stagemanager:currentStage():draw()
     camera:detach()
 
-    love.graphics.setColor(0,1,0)
+    love.graphics.setColor(1,1,1)
     love.graphics.printf("The Call of Adventure", titleFont,0,80,gameWidth,"center")
     love.graphics.printf("Press enter to start!", 0,150,gameWidth,"center")
 end

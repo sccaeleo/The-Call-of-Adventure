@@ -120,10 +120,8 @@ end
 function Stage:rightCollision(entity, offset)
     local row1,col1,row2,col2 = self:toMapCoords(entity)
     if col2 < self.colCount then -- bellow the right corner of the stage
-        for i = math.max(1, row1+offset), 
-                math.min(row2-offset,self.rowCount) do
-            if self.map[i][col2] ~= nil 
-                    and self.map[i][col2].solid then
+        for i = math.max(1, row1+offset), math.min(row2-offset,self.rowCount) do
+            if self.map[i][col2] ~= nil and self.map[i][col2].solid then
                 return true
             end -- end if 
         end -- end for
@@ -134,10 +132,8 @@ end
 function Stage:leftCollision(entity, offset)
     local row1,col1,row2,col2 = self:toMapCoords(entity)
     if col1 >= 1 then -- bellow the left corner of the stage
-        for i = math.max(1, row1+offset), 
-                math.min(row2-offset,self.rowCount) do
-            if self.map[i][col1] ~= nil 
-                    and self.map[i][col1].solid then
+        for i = math.max(1, row1+offset), math.min(row2-offset,self.rowCount) do
+            if self.map[i][col1] ~= nil and self.map[i][col1].solid then
                 return true
             end -- end if 
         end -- end for
@@ -148,10 +144,9 @@ end
 function Stage:topCollision(entity, offset)
     local row1,col1,row2,col2 = self:toMapCoords(entity)
     if row1 >= 1 then
-        for i = math.max(1, col1+offset), 
-                math.min(col2-offset,self.colCount) do
-            if self.map[row1][i] ~= nil 
-                    and self.map[row1][i].solid then
+        for i = math.max(1, col1+offset), math.min(col2-offset,self.colCount) do
+            if self.map[row1][i] ~= nil and self.map[row1][i].solid then
+                print("top")
                 return true
             end -- end if 
         end -- end for
@@ -162,10 +157,8 @@ end
 function Stage:bottomCollision(entity, offset)
     local row1,col1,row2,col2 = self:toMapCoords(entity)
     if row2 < self.rowCount then
-        for i = math.max(1, col1+offset), 
-                math.min(col2-offset,self.colCount) do
-            if self.map[row2][i] ~= nil 
-                    and self.map[row2][i].solid then
+        for i = math.max(1, col1+offset), math.min(col2-offset,self.colCount) do
+            if self.map[row2][i] ~= nil and self.map[row2][i].solid then
                 return true
             end -- end if 
         end -- end for

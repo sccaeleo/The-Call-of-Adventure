@@ -84,20 +84,20 @@ function Player:update(dt,stage)
     -- Player movement
     if love.keyboard.isDown("d","right") then
         self:setDirection("r")
-        if not stage:rightCollision(self, 1) then
+        if not stage:rightCollision(self, 0) then
             self.x = self.x + self.speed*dt
         end
     elseif love.keyboard.isDown("a","left") then
         self:setDirection("l")
-        if not stage:leftCollision(self,1) then
+        if not stage:leftCollision(self,0) then
             self.x = self.x - self.speed*dt
         end
     elseif love.keyboard.isDown("s","down") then
-        if not stage:bottomCollision(self,1) then
+        if not stage:bottomCollision(self,0) then
             self.y = self.y + self.speed*dt
         end
     elseif love.keyboard.isDown("w","up") then
-        if not stage:topCollision(self,1) then
+        if not stage:topCollision(self,0) then
             self.y = self.y - self.speed*dt
         end
     end
