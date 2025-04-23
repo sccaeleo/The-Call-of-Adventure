@@ -28,7 +28,7 @@ local function createS1()
 
 
     -- music
-    --stage:setMusic(Sounds["music_dungeon_passive"])
+    stage:setMusic(Sounds["music_dungeon_passive"])
 
     return stage
 end

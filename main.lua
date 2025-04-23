@@ -2,20 +2,21 @@
 
 local Globals = require "src.Globals"
 local Push = require "libs.push"
-local Sounds = require "src.game.Sounds"
 local Player = require "src.game.Player"
 local Camera = require "libs.sxcamera"
 local HUD = require "src.game.HUD"
 local Skeleton = require "src.game.enemy.Skeleton"
+local Sounds = require "src.game.Sounds"
 
 function love.load()
     love.window.setTitle("The Call of Adventure")
     Push:setupScreen(gameWidth, gameHeight, windowWidth, windowHeight, {fullscreen = false, resizable = true})
     math.randomseed(os.time()) -- RNG setup for later
     titleFont = love.graphics.newFont("fonts/Kaph-Regular.ttf",26)
-
     Class = "Wizard"
 
+    
+    Sounds["music_dungeon_passive"]:play()
     skeleton = Skeleton(0,0, "Skeleton")
     player = Player(0,0, Class)
     hud = HUD(player,skeleton)

@@ -2,7 +2,7 @@ local Class = require "libs.hump.class"
 local Anim8 = require "libs.anim8"
 local Tween = require "libs.tween"
 local Hbox = require "src.game.Hbox"
-local Sounds = require "src.game.Sounds"
+--local Sounds = require "src.game.Sounds"
 
 -- Sprites
 local WizardSprite = love.graphics.newImage("graphics/characters/wizard-Sheet.png")

@@ -1,6 +1,8 @@
 local Class = require "libs.hump.class"
 local Tweens = require "libs.tween"
 local Explosion = require "src.game.Explosion"
+local Sounds = require "src.game.Sounds"
+
 
 -- Here we create a specific font in our HUD
 local hudFont = love.graphics.newFont("fonts/Abaddon Bold.ttf",16)
@@ -12,6 +14,7 @@ local playerBlockDuration = 0
 local exp = Explosion()
 exp:init()
 exp:setColor(255,0,0)
+--sounds()
 
 local HUD = Class{}
 function HUD:init(player, skeleton)
@@ -21,6 +24,7 @@ end
 
 function love.load()
     exp = Explosion()
+
 end
 
 function HUD:update(dt)
@@ -48,17 +52,21 @@ function HUD:keypressed(key)
             self.player.CurrentHp = self.player.CurrentHp - (math.random(1,self.skeleton.damageRoll) + self.skeleton.damageBonus)
             exp:trigger(math.floor(gameWidth/4),math.floor(gameHeight/2))
             damageTextChar = "Hit"
+            Sounds["attack1"]:play()
             damageTextTimer = 1
         else
             damageTextChar = "Miss"
+            Sounds["miss"]:play()
         end
         if (math.random(1,20) + self.player.attackBonus) >= self.skeleton.armorClass then
             self.skeleton.CurrentHp = self.skeleton.CurrentHp - (math.random(1,self.player.damageRoll) + self.player.damageBonus)
             exp:trigger(math.floor(gameWidth - gameWidth/4),math.floor(gameHeight/2))
             damageTextEnemy = "Hit"
+            Sounds["attack1"]:play()
             damageTextTimer = 1
         else
             damageTextEnemy = "Miss"
+            Sounds["miss"]:play()
         end
         if playerBlockDuration > 0 then
             playerBlockDuration = playerBlockDuration - 1
@@ -70,6 +78,7 @@ function HUD:keypressed(key)
             self.player.CurrentHp = self.player.CurrentHp - math.floor((math.random(1,self.skeleton.damageRoll) + self.skeleton.damageBonus)/2)
             exp:trigger(math.floor(gameWidth/4),math.floor(gameHeight/2))
             damageTextChar = "Hit"
+            Sounds["attack1"]:play()
             damageTextEnemy = "Block"
             damageTextTimer = 1
         else
