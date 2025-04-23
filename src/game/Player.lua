@@ -7,15 +7,15 @@ local Sounds = require "src.game.Sounds"
 -- Sprites
 local WizardSprite = love.graphics.newImage("graphics/characters/wizard-Sheet.png")
 local WizardGrid = Anim8.newGrid(32,32,WizardSprite:getWidth(),WizardSprite:getHeight())
-local WizardAnim = Anim8.newAnimation(WizardGrid('1-4',1), 0.3)
+local WizardAnim = Anim8.newAnimation(WizardGrid('1-4',1), 0.05)
 
 local RangerSprite = love.graphics.newImage("graphics/characters/ranger-Sheet.png")
 local RangerGrid = Anim8.newGrid(32,32,RangerSprite:getWidth(),RangerSprite:getHeight())
-local RangerAnim = Anim8.newAnimation(RangerGrid('1-4',1), 0.3)
+local RangerAnim = Anim8.newAnimation(RangerGrid('1-4',1), 0.05)
 
 local PaladinSprite = love.graphics.newImage("graphics/characters/paladin-Sheet.png")
 local PaladinGrid = Anim8.newGrid(32,32,PaladinSprite:getWidth(),PaladinSprite:getHeight())
-local PaladinAnim = Anim8.newAnimation(PaladinGrid('1-4',1), 0.3)
+local PaladinAnim = Anim8.newAnimation(PaladinGrid('1-4',1), 0.05)
 
 
 local Player = Class{}
@@ -106,6 +106,7 @@ function Player:update(dt,stage)
     if self.state == "idle" or self.state == "walk" then
         if love.keyboard.isDown("w","a","s","d","up","down","right","left") then
             self.state = "walk"
+
         else
             self.state = "idle"
         end
@@ -117,6 +118,13 @@ function Player:update(dt,stage)
         -- Player colided with obj
         self:handleObjectCollision(obj)
     end
+
+    if self.state == "walk" or self.state == "battle" then
+        self.animations[self.class]:update(dt)
+    else
+        self.animations[self.class]:gotoFrame(1)
+    end
+    
 end
 
 function Player:handleObjectCollision(obj)
@@ -145,6 +153,7 @@ function Player:draw()
 end
 
 function Player:drawBattleState()
+    self.state = "battle"
     self.animations[self.class]:draw(self.sprites[self.class], math.floor(gameWidth/4), math.floor(gameHeight/2) )
 
     if debugFlag then
