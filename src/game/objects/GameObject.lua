@@ -15,11 +15,17 @@ function GameObject:init()
 end
 
 function GameObject:update(dt)
-    self.animation:update(dt)
+    if self.animation ~= nil then
+        self.animation:update(dt)
+    end
 end
 
 function GameObject:draw()
-    self.animation:draw(self.sprite, self.x, self.y)
+    if self.animation ~= nil then
+        self.animation:draw(self.sprite, self.x, self.y)
+    else
+        love.graphics.draw(self.sprite, self.x, self.y)
+    end
 end
 
 function GameObject:getDimensions()

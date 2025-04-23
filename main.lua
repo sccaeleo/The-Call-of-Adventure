@@ -14,7 +14,7 @@ function love.load()
     math.randomseed(os.time()) -- RNG setup for later
     titleFont = love.graphics.newFont("fonts/Kaph-Regular.ttf",26)
 
-    Class = "Paladin"
+    Class = "Wizard"
 
     skeleton = Skeleton(0,0, "Skeleton")
     player = Player(0,0, Class)
