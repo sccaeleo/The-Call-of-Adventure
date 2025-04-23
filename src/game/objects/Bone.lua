@@ -10,6 +10,7 @@ function Bone:init(type) GameObject:init()
     self.name = "bone"
     self.type = type 
     self.sprite = spriteBone
+    self.collectible = false
 
     self:setType(type)
 end

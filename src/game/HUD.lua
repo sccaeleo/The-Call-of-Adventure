@@ -1,5 +1,5 @@
 local Class = require "libs.hump.class"
-local Tweens = require "libs.tween"
+local Tween = require "libs.tween"
 local Explosion = require "src.game.Explosion"
 local Sounds = require "src.game.Sounds"
 
@@ -9,7 +9,7 @@ local hudFont = love.graphics.newFont("fonts/Abaddon Bold.ttf",16)
 local damageTextChar = ""
 local damageTextEnemy = ""
 local damageTextTimer = 0
-local tween = Tweens
+local tweenText = nil
 local playerBlockDuration = 0
 local exp = Explosion()
 exp:init()
@@ -89,8 +89,13 @@ function HUD:keypressed(key)
     end
 end
 
+function HUD:tweenHitMiss()
+    tweenText = Tween.new(0.3,self.damageTextChar, {x = math.floor(gameWidth/4), y = math.floor(gameHeight/2 - 32)})
+end
+
 function HUD:draw()
     if damageText ~= "" then
+        --HUD:tweenHitMiss()
         love.graphics.print(damageTextChar,hudFont,math.floor(gameWidth/4),math.floor(gameHeight/2 - 32))
         love.graphics.print(damageTextEnemy,hudFont,math.floor(gameWidth -gameWidth/4),math.floor(gameHeight/2 - 32))
         exp:draw(10,10)

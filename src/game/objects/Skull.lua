@@ -10,6 +10,7 @@ function Skull:init(type) GameObject:init()
     self.name = "skull"
     self.type = type 
     self.sprite = spriteSkull
+    self.collectible = false
 
     self:setType(type)
 end

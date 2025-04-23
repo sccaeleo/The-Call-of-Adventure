@@ -161,7 +161,6 @@ function Player:draw()
 end
 
 function Player:drawBattleState()
-    self.state = "battle"
     self.animations[self.class]:draw(self.sprites[self.class], math.floor(gameWidth/4), math.floor(gameHeight/2) )
 
     if debugFlag then

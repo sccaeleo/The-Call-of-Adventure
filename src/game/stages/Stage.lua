@@ -1,6 +1,7 @@
 local Class = require "libs.hump.class"
 local Matrix = require "libs.matrix"
 local objutil = require "src.game.objects.objutil"
+local font = love.graphics.newFont("fonts/Abaddon Bold.ttf",16)
 
 local Stage = Class{}
 function Stage:init(rows, cols, ts)
@@ -16,6 +17,8 @@ function Stage:init(rows, cols, ts)
     self.objects = {} -- game objects
     self.bgs = {} -- backgrounds
     self.map = Matrix:new(self.rowCount, self.colCount) -- map will be a matrix of tiles
+
+    self.drawText = false
 end
 
 
@@ -60,6 +63,7 @@ function Stage:draw()
     for k=1, #self.mobs do 
         self.mobs[k]:draw()
     end
+
 end
 
 function Stage:drawTile(row,col)
@@ -146,7 +150,6 @@ function Stage:topCollision(entity, offset)
     if row1 >= 1 then
         for i = math.max(1, col1+offset), math.min(col2-offset,self.colCount) do
             if self.map[row1][i] ~= nil and self.map[row1][i].solid then
-                print("top")
                 return true
             end -- end if 
         end -- end for
@@ -185,9 +188,13 @@ function Stage:checkObjectsCollision(entity)
                 and col1 <= self.objects[k].col 
                 and col2 >= self.objects[k].col then
             
-            local colidedObj = self.objects[k]
-            table.remove(self.objects, k)
-            return colidedObj
+            local collidedObj = self.objects[k]
+            if collidedObj.collectible then
+                love.graphics.print(collidedObj.name.." collected!",font,collidedObj.x,collidedObj.y)
+                table.remove(self.objects, k)
+                
+            end
+            return collidedObj
         end
     end
 end

@@ -13,6 +13,7 @@ function Torch:init(type) GameObject:init()
     self.type = type 
     self.sprite = spriteTorch
     self.animation = animTorch:clone()
+    self.collectible = false
 
     self:setType(type)
 end
