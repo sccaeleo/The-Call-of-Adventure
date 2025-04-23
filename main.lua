@@ -15,8 +15,9 @@ function love.load()
     titleFont = love.graphics.newFont("fonts/Kaph-Regular.ttf",26)
     Class = "Wizard"
 
-    
+    Sounds["music_dungeon_passive"]:setLooping(true)    
     Sounds["music_dungeon_passive"]:play()
+
     skeleton = Skeleton(0,0, "Skeleton")
     player = Player(0,0, Class)
     hud = HUD(player,skeleton)
