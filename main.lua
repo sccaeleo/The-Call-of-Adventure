@@ -60,6 +60,9 @@ function love.keypressed(key)
     
 
     else
+        if gameState == "battle" then
+            hud:keypressed(key)
+        end
         player:keypressed(key)
     end
 end
@@ -68,11 +71,12 @@ function love.update(dt)
     if gameState == "roam" then
         stagemanager:currentStage():update(dt)
         player:update(dt, stagemanager:currentStage())
-        --hud:update(dt)
 
         camera:update(dt)
         camera:follow(
             math.floor(player.x+48), math.floor(player.y))
+    elseif  gameState == "battle" then
+        hud:update(dt)
     end
 end
 
@@ -88,14 +92,19 @@ function love.draw()
     
     -- When player battles
     elseif gameState == "battle" then
+        player:setDirection("r")
         drawBattleState()
 
     -- When player dies/loses
     elseif gameState == "end" then
+        skeleton.CurrentHp = skeleton.health
+        player.CurrentHp = player.health
         drawEndState()
 
     -- When game is won
     elseif gameState == "complete" then
+        skeleton.CurrentHp = skeleton.health
+        player.CurrentHp = player.health
         drawStageCompleteState()
 
     -- Error

@@ -32,6 +32,7 @@ function Player:init(x, y, class)
     -- Player stats & inventory
     self.health = 100
     self.CurrentHp = 100
+    self.armorClass = 10
 
     self.mana = 100
     self.CurrentMp = 100
@@ -51,14 +52,26 @@ function Player:init(x, y, class)
     if self.class == "Wizard" then
         self.animations["Wizard"] = WizardAnim
         self.sprites["Wizard"] = WizardSprite
+        self.armorClass = 12
+        self.attackBonus = 8
+        self.damageBonus = 8
+        self.damageRoll = 12
 
     elseif self.class == "Ranger" then
         self.animations["Ranger"] = RangerAnim
         self.sprites["Ranger"] = RangerSprite
+        self.armorClass = 14
+        self.attackBonus = 6
+        self.damageBonus = 6
+        self.damageRoll = 10
 
     elseif self.class == "Paladin" then
         self.animations["Paladin"] = PaladinAnim
         self.sprites["Paladin"] = PaladinSprite
+        self.armorClass = 16
+        self.attackBonus = 4
+        self.damageBonus = 5
+        self.damageRoll = 8
 
     end
 

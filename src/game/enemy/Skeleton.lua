@@ -14,7 +14,6 @@ local SkeletonAnim = Anim8.newAnimation(SkeletonGrid('1-2',1), 0.3)
 local Skeleton = Class{}
 
 function Skeleton:init(x, y, class)
-
     self.x = x
     self.y = y
     self.name = "char"
@@ -25,6 +24,10 @@ function Skeleton:init(x, y, class)
     -- Skeleton stats & inventory
     self.health = 50
     self.CurrentHp = 50
+    self.armorClass = 10
+    self.attackBonus = 3
+    self.damageRoll = 4
+    self.damageBonus = 2
 
     self.mana = 20
     self.CurrentMp = 20
